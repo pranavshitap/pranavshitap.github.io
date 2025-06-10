@@ -1,0 +1,53 @@
+:root {
+  --bg-light: #f0f0f0;
+  --bg-dark: #1e1e1e;
+  --text-light: #333;
+  --text-dark: #d4d4d4;
+  --link-light: #007bff;
+  --link-dark: #569cd6;
+  --font: "Fira Code", "Consolas", "Courier New", monospace;;
+}
+
+body {
+  font-family: var(--font);
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+  }
+  a {
+    color: var(--link-dark);
+  }
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 50px 0;
+}
+
+h1 {
+  margin-bottom: 0.5em;
+}
+
+p {
+  margin: 0.5em 0;
+}
+
+a {
+  color: var(--link-light);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
