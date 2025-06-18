@@ -1,53 +1,181 @@
 :root {
-  --bg-light: #f0f0f0;
-  --bg-dark: #1e1e1e;
-  --text-light: #333;
-  --text-dark: #d4d4d4;
-  --link-light: #007bff;
-  --link-dark: #569cd6;
-  --font: "Fira Code", "Consolas", "Courier New", monospace;;
+  --bg: #ffffff;
+  --text: #181818;
+  --highlight: #50fa7b;
+  --section-bg: #f5f5f5;
+  --link: #0066cc;
+  --shadow: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] {
+  --bg: #181818;
+  --text: #f5f5f5;
+  --highlight: #50fa7b;
+  --section-bg: #232323;
+  --link: #50fa7b;
+  --shadow: rgba(0, 0, 0, 0.2);
 }
 
 body {
-  font-family: var(--font);
+  font-family: 'Fira Code', monospace;
   margin: 0;
-  padding: 0;
-  background-color: var(--bg-light);
-  color: var(--text-light);
-  transition: background 0.3s, color 0.3s;
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: var(--bg-dark);
-    color: var(--text-dark);
-  }
-  a {
-    color: var(--link-dark);
-  }
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .container {
-  width: 80%;
+  max-width: 700px;
   margin: 0 auto;
+  padding: 2rem 1rem;
   text-align: center;
-  padding: 50px 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Theme Toggle Button */
+#themeToggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--highlight);
+  color: var(--bg);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+#themeToggle:hover {
+  background: #40c97b;
 }
 
 h1 {
-  margin-bottom: 0.5em;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
 }
 
-p {
-  margin: 0.5em 0;
+.subtitle {
+  color: var(--highlight);
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.section {
+  margin: 2rem 0;
+  background: var(--section-bg);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
 a {
-  color: var(--link-light);
+  color: var(--link);
   text-decoration: none;
 }
-
 a:hover {
   text-decoration: underline;
+}
+
+/* Chatbot Button */
+.chatbot-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--highlight);
+  color: var(--bg);
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(80, 250, 123, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Chatbot Modal */
+.chatbot-modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  right: 16px;
+  bottom: 90px;
+  width: 340px;
+  max-width: 95vw;
+  background: var(--section-bg);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  flex-direction: column;
+  min-height: 350px;
+}
+.chatbot-modal.active {
+  display: flex;
+  animation: fadeIn 0.2s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(40px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+.chatbot-header {
+  background: var(--highlight);
+  color: var(--bg);
+  padding: 1rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.chatbot-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--bg);
+}
+.chatbot-body {
+  flex: 1;
+  padding: 1.5rem;
+  color: var(--text);
+  font-size: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Particle Canvas */
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem 0.2rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  .section {
+    padding: 1rem;
+  }
+  .chatbot-modal {
+    width: 98vw;
+    right: 1vw;
+    bottom: 80px;
+    min-height: 220px;
+  }
 }
