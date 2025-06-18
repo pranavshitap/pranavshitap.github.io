@@ -1,22 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to My GitHub Page</title>
-
-  <!-- Fira Code font (like VS Code) -->
+  <title>Pranav Shitap | Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet" />
-
-  <!-- External stylesheet -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <canvas id="bg-canvas"></canvas>
+
   <div class="container">
-    <h1>Welcome to My GitHub Page</h1>
-    <p>I'm Pranav</p>
-    <p>Work in Progress</p>
-    <p>Learn more about GitHub Pages <a href="https://pages.github.com/" target="_blank">here</a>.</p>
+    <button id="themeToggle" title="Toggle theme">🌙</button>
+    <h1>Pranav Shitap</h1>
+    <div class="subtitle">Software Developer | Portfolio</div>
+
+    <div class="section">
+      <p>Hello! I'm Pranav, a passionate developer. This page is a work in progress.</p>
+      <p>Learn more about GitHub Pages <a href="https://pages.github.com/" target="_blank">here</a>.</p>
+    </div>
+
+    <div class="section">
+      <h2>About Me</h2>
+      <p>I love building web apps, exploring new tech, and sharing knowledge.</p>
+    </div>
+
+    <div class="section">
+      <h2>Projects</h2>
+      <ul>
+        <li><strong>Project 1</strong> – <a href="#">GitHub Link</a></li>
+        <li><strong>Project 2</strong> – <a href="#">GitHub Link</a></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
+      <p>GitHub: <a href="https://github.com/pranavshitap" target="_blank">@pranavshitap</a></p>
+    </div>
   </div>
+
+  <!-- Chatbot UI -->
+  <button class="chatbot-btn" id="chatbotBtn" title="Chat with me">💬</button>
+  <div class="chatbot-modal" id="chatbotModal">
+    <div class="chatbot-header">
+      Chat with Pranav
+      <button class="chatbot-close" id="chatbotClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="chatbot-body">
+      <p>Chatbot coming soon! Ask me about my work, skills, or projects.</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
