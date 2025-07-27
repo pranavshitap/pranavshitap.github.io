@@ -69,11 +69,26 @@ function animate() {
 createParticles(window.innerWidth < 600 ? 40 : 80);
 animate();
 
-// Chatbot modal toggle
-document.getElementById('chatbotBtn').onclick = () =>
-  document.getElementById('chatbotModal').classList.add('active');
-document.getElementById('chatbotClose').onclick = () =>
-  document.getElementById('chatbotModal').classList.remove('active');
+const chatbotBtn = document.getElementById('chatbotBtn');
+const chatbotModal = document.getElementById('chatbotModal');
+const chatbotOverlay = document.getElementById('chatbotOverlay');
+const chatbotClose = document.getElementById('chatbotClose');
+
+chatbotBtn.onclick = () => {
+  chatbotModal.classList.add('active');
+  chatbotOverlay.classList.add('active');
+};
+
+chatbotClose.onclick = () => {
+  chatbotModal.classList.remove('active');
+  chatbotOverlay.classList.remove('active');
+};
+
+chatbotOverlay.onclick = () => {
+  chatbotModal.classList.remove('active');
+  chatbotOverlay.classList.remove('active');
+};
+
 
 // Theme toggle with localStorage
 const themeToggle = document.getElementById('themeToggle');
@@ -97,3 +112,53 @@ const savedTheme = localStorage.getItem('theme');
 if (savedTheme) {
   applyTheme(savedTheme);
 }
+
+// === Chatbot Logic ===
+
+async function sendChatMessage(message) {
+  const res = await fetch('/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ prompt: message }),
+  });
+  const data = await res.json();
+  return data.reply;
+}
+
+function addChatMessage(sender, message) {
+  const chatLog = document.getElementById('chat-log');
+  const div = document.createElement('div');
+  div.innerHTML = `<strong>${sender}:</strong> ${message}`;
+  div.style.marginBottom = '8px';
+  chatLog.appendChild(div);
+  chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+function checkSessionAccess() {
+  // Checks if session is present
+  if (document.cookie.includes('session')) {
+    document.getElementById('chat-access').style.display = 'block';
+  }
+}
+
+document.getElementById('chat-form').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const input = document.getElementById('chat-input');
+  const userMessage = input.value.trim();
+  if (!userMessage) return;
+
+  addChatMessage('You', userMessage);
+  input.value = '';
+  try {
+    const botReply = await sendChatMessage(userMessage);
+    addChatMessage('Bot', botReply);
+    checkSessionAccess();
+  } catch (err) {
+    console.error('Error:', err);
+    addChatMessage('Bot', 'Something went wrong. Please try again.');
+  }
+});
+
+window.addEventListener('load', checkSessionAccess);
+

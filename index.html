@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="chatbotOverlay" class="chatbot-overlay"></div>
   <canvas id="bg-canvas"></canvas>
 
   <div class="container">
@@ -48,7 +49,14 @@
       <button class="chatbot-close" id="chatbotClose" aria-label="Close">&times;</button>
     </div>
     <div class="chatbot-body">
-      <p>Chatbot coming soon! Ask me about my work, skills, or projects.</p>
+      <div id="chat-access" style="display: none; color: lime; font-weight: bold; margin-bottom: 10px;">
+        ─── Access Granted ───
+      </div>
+      <div id="chat-log" style="flex: 1; overflow-y: auto; text-align: left; max-height: 200px;"></div>
+      <form id="chat-form" style="display: flex; margin-top: 10px;">
+        <input type="text" id="chat-input" placeholder="Ask something..." style="flex: 1; padding: 6px;" required />
+        <button type="submit" style="padding: 6px 12px; background: var(--highlight); border: none; color: var(--bg);">➤</button>
+      </form>
     </div>
   </div>
 
