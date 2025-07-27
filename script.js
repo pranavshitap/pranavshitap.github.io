@@ -116,7 +116,7 @@ if (savedTheme) {
 // === Chatbot Logic ===
 
 async function sendChatMessage(message) {
-  const res = await fetch('http://127.0.0.1:8010/api/chat', {
+  const res = await fetch('/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
@@ -129,8 +129,9 @@ async function sendChatMessage(message) {
 function addChatMessage(sender, message) {
   const chatLog = document.getElementById('chat-log');
   const div = document.createElement('div');
-  div.innerHTML = `<strong>${sender}:</strong> ${message}`;
-  div.style.marginBottom = '8px';
+  const isUser = sender === 'You';
+  div.className = 'chat-message ' + (isUser ? 'user' : 'bot');
+  div.innerHTML = `<div class="chat-bubble"><strong>${sender}:</strong> ${message}</div>`;
   chatLog.appendChild(div);
   chatLog.scrollTop = chatLog.scrollHeight;
 }
