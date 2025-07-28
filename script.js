@@ -115,15 +115,27 @@ if (savedTheme) {
 
 // === Chatbot Logic ===
 
-async function sendChatMessage(message) {
+async function sendChatMessage(message, onStreamChunk) {
   const res = await fetch('http://127.0.0.1:8010/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
     body: JSON.stringify({ prompt: message }),
   });
-  const data = await res.json();
-  return data.reply;
+
+  if (!res.body) return '';
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let reply = '';
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    const chunk = decoder.decode(value, { stream: true });
+    reply += chunk;
+    if (onStreamChunk) onStreamChunk(chunk);
+  }
+  return reply;
 }
 
 function addChatMessage(sender, message) {
@@ -151,13 +163,25 @@ document.getElementById('chat-form').addEventListener('submit', async function (
 
   addChatMessage('You', userMessage);
   input.value = '';
+
+  // Create bot message placeholder
+  const chatLog = document.getElementById('chat-log');
+  const botDiv = document.createElement('div');
+  botDiv.className = 'chat-message bot';
+  botDiv.innerHTML = `<div class="chat-bubble"><strong>Bot:</strong> <span id="bot-reply"></span></div>`;
+  chatLog.appendChild(botDiv);
+  chatLog.scrollTop = chatLog.scrollHeight;
+
+  const botReplySpan = botDiv.querySelector('#bot-reply');
   try {
-    const botReply = await sendChatMessage(userMessage);
-    addChatMessage('Bot', botReply);
+    await sendChatMessage(userMessage, chunk => {
+      botReplySpan.textContent += chunk;
+      chatLog.scrollTop = chatLog.scrollHeight;
+    });
     checkSessionAccess();
   } catch (err) {
     console.error('Error:', err);
-    addChatMessage('Bot', 'Something went wrong. Please try again.');
+    botReplySpan.textContent = 'Something went wrong. Please try again.';
   }
 });
 
