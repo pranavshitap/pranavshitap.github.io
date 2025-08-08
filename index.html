@@ -1,87 +1,414 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pranav Shitap | Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet" />
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="chatbotOverlay" class="chatbot-overlay"></div>
+  <!-- Animated background -->
   <canvas id="bg-canvas"></canvas>
-
-  <div class="container">
-    <button id="themeToggle" title="Toggle theme">🌙</button>
-    <h1>Pranav Shitap</h1>
-    <div class="subtitle">Python & GenAI Developer | R&D Engineer @ TCS</div>
-
-    <div class="section">
-      <p>Hello! I'm Pranav, a passionate developer (R&D-focused). This page is a work in progress.</p>
-      <p>Learn more about GitHub Pages <a href="https://pages.github.com/" target="_blank">here</a>.</p>
-    </div>
-
-    <div class="section">
-      <h2>About Me</h2>
-      <p>Hello! I'm Pranav, a Python and AI engineer with 3+ years of experience in ML, Generative AI, and backend development. I build intelligent, production-grade systems for automotive diagnostics use cases. This page is a work in progress, just like most good things.</p>
-    </div>
-
-    <div class="section">
-      <h2>Skills</h2>
-      <ul>
-        <li><strong>Languages:</strong> Python, MATLAB</li>
-        <li><strong>Web:</strong> Django, HTML, JavaScript, Bootstrap, SSE, JWT</li>
-        <li><strong>Cloud & DevOps:</strong> Azure App Services, IoT Edge, DevOps, Docker, Git</li>
-        <li><strong>AI/ML:</strong> scikit-learn, pandas, NumPy, Matplotlib</li>
-        <li><strong>Generative AI:</strong> Azure OpenAI, LangChain, Weaviate, RAG, GPT-4o, Function Calling</li>
-        <li><strong>Tools:</strong> VS Code, Postman</li>
-      </ul>
-    </div>
-
-   <div class="section">
-      <h2>Projects</h2>
-      <ul>
-        <li>
-          <strong>AI Assistant for Vehicle Diagnostics</strong> – Built a Django-based web assistant using Azure OpenAI and Weaviate. Included RAG architecture, function calling, and real-time UI updates with Server-Sent Events.
-        </li>
-        <li>
-          <strong>Edge ML Deployment</strong> – Deployed ML models to Raspberry Pi using Docker and Azure IoT Edge for real-time diagnostics.
-        </li>
-        <li>
-          <strong>Backend API Development</strong> – Created FastAPI backends with RESTful APIs for internal tools and dashboards.
-        </li>
-        <li>
-          <strong>Dashboard Redesign</strong> – Migrated MATLAB dashboards from Tableau to improve vehicle diagnostics data visibility.
-        </li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:pranavshitap@gmail.com">pranavshitap@gmail.com</a></p>
-      <p>GitHub: <a href="https://github.com/pranavshitap" target="_blank">@pranavshitap</a></p>
-    </div>
-  </div>
-
-  <!-- Chatbot UI -->
-  <button class="chatbot-btn" id="chatbotBtn" title="Chat with me">💬</button>
-  <div class="chatbot-modal" id="chatbotModal">
-    <div class="chatbot-header">
-      Chat with Pranav
-      <button class="chatbot-close" id="chatbotClose" aria-label="Close">&times;</button>
-    </div>
-    <div class="chatbot-body">
-      <div id="chat-access" style="display: none; color: lime; font-weight: bold; margin-bottom: 10px;">
-        ─── Access Granted ───
+  
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-blur">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#home">
+        <i class="bi bi-code-slash text-primary"></i>
+        Pranav Shitap
+      </a>
+      
+      <div class="d-flex align-items-center">
+        <!-- Theme Toggle -->
+        <button class="btn btn-outline-light me-3" id="themeToggle" title="Toggle theme">
+          <i class="bi bi-moon-fill" id="theme-icon"></i>
+        </button>
+        
+        <!-- Mobile menu toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       </div>
-      <div id="chat-log" style="flex: 1; overflow-y: auto; text-align: left; max-height: 100%;"></div>
-      <form id="chat-form" style="display: flex; margin-top: 10px;">
-        <input type="text" id="chat-input" placeholder="Ask something..." style="flex: 1; padding: 6px;" required />
-        <button type="submit" style="padding: 6px 12px; background: var(--highlight); border: none; color: var(--bg);">➤</button>
-      </form>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#skills">Skills</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#projects">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero-section min-vh-100 d-flex align-items-center">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <div class="hero-content">
+            <div class="avatar-container mb-4">
+              <div class="avatar-placeholder">
+                <i class="bi bi-person-circle"></i>
+              </div>
+            </div>
+            <h1 class="display-4 fw-bold mb-3 text-gradient">
+              Pranav Shitap
+            </h1>
+            <p class="lead mb-4 text-secondary">
+              Python & GenAI Developer | R&D Engineer @ TCS
+            </p>
+            <p class="mb-4">
+              Building intelligent, production-grade systems for automotive diagnostics. 
+              Passionate about AI/ML and creating innovative solutions.
+            </p>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+              <a href="#about" class="btn btn-primary btn-lg">
+                <i class="bi bi-person me-2"></i>About Me
+              </a>
+              <a href="#projects" class="btn btn-outline-primary btn-lg">
+                <i class="bi bi-folder me-2"></i>Projects
+              </a>
+              <button class="btn btn-success btn-lg" id="chatbotBtn">
+                <i class="bi bi-chat-dots me-2"></i>Chat with me
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="section-header text-center mb-5">
+            <h2 class="display-5 fw-bold">About Me</h2>
+            <div class="divider mx-auto"></div>
+          </div>
+          
+          <div class="card glass-card">
+            <div class="card-body p-4">
+              <p class="lead">
+                Hello! I'm Pranav, a Python and AI engineer with 3+ years of experience in ML, 
+                Generative AI, and backend development. I build intelligent, production-grade 
+                systems for automotive diagnostics use cases.
+              </p>
+              <p class="mb-0">
+                This page showcases my journey in technology, from machine learning models 
+                to edge deployment and everything in between. Always learning, always building.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="py-5 bg-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="section-header text-center mb-5">
+            <h2 class="display-5 fw-bold">Skills & Technologies</h2>
+            <div class="divider mx-auto"></div>
+          </div>
+          
+          <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+              <div class="skill-card">
+                <div class="skill-icon">
+                  <i class="bi bi-code-square"></i>
+                </div>
+                <h5>Languages</h5>
+                <div class="skill-tags">
+                  <span class="badge skill-tag">Python</span>
+                  <span class="badge skill-tag">MATLAB</span>
+                  <span class="badge skill-tag">JavaScript</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+              <div class="skill-card">
+                <div class="skill-icon">
+                  <i class="bi bi-globe"></i>
+                </div>
+                <h5>Web Development</h5>
+                <div class="skill-tags">
+                  <span class="badge skill-tag">Django</span>
+                  <span class="badge skill-tag">HTML/CSS</span>
+                  <span class="badge skill-tag">Bootstrap</span>
+                  <span class="badge skill-tag">SSE</span>
+                  <span class="badge skill-tag">JWT</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+              <div class="skill-card">
+                <div class="skill-icon">
+                  <i class="bi bi-cloud"></i>
+                </div>
+                <h5>Cloud & DevOps</h5>
+                <div class="skill-tags">
+                  <span class="badge skill-tag">Azure</span>
+                  <span class="badge skill-tag">IoT Edge</span>
+                  <span class="badge skill-tag">Docker</span>
+                  <span class="badge skill-tag">Git</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+              <div class="skill-card">
+                <div class="skill-icon">
+                  <i class="bi bi-graph-up"></i>
+                </div>
+                <h5>AI/ML</h5>
+                <div class="skill-tags">
+                  <span class="badge skill-tag">scikit-learn</span>
+                  <span class="badge skill-tag">pandas</span>
+                  <span class="badge skill-tag">NumPy</span>
+                  <span class="badge skill-tag">Matplotlib</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+              <div class="skill-card">
+                <div class="skill-icon">
+                  <i class="bi bi-robot"></i>
+                </div>
+                <h5>Generative AI</h5>
+                <div class="skill-tags">
+                  <span class="badge skill-tag">Azure OpenAI</span>
+                  <span class="badge skill-tag">LangChain</span>
+                  <span class="badge skill-tag">Weaviate</span>
+                  <span class="badge skill-tag">RAG</span>
+                  <span class="badge skill-tag">GPT-4o</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+              <div class="skill-card">
+                <div class="skill-icon">
+                  <i class="bi bi-tools"></i>
+                </div>
+                <h5>Tools</h5>
+                <div class="skill-tags">
+                  <span class="badge skill-tag">VS Code</span>
+                  <span class="badge skill-tag">Postman</span>
+                  <span class="badge skill-tag">Git</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="section-header text-center mb-5">
+            <h2 class="display-5 fw-bold">Featured Projects</h2>
+            <div class="divider mx-auto"></div>
+          </div>
+          
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div class="project-card">
+                <div class="project-icon">
+                  <i class="bi bi-robot"></i>
+                </div>
+                <h4>AI Assistant for Vehicle Diagnostics</h4>
+                <p class="text-muted">
+                  Built a Django-based web assistant using Azure OpenAI and Weaviate. 
+                  Included RAG architecture, function calling, and real-time UI updates with Server-Sent Events.
+                </p>
+                <div class="project-tags">
+                  <span class="badge project-tag">Django</span>
+                  <span class="badge project-tag">Azure OpenAI</span>
+                  <span class="badge project-tag">RAG</span>
+                  <span class="badge project-tag">SSE</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-lg-6">
+              <div class="project-card">
+                <div class="project-icon">
+                  <i class="bi bi-cpu"></i>
+                </div>
+                <h4>Edge ML Deployment</h4>
+                <p class="text-muted">
+                  Deployed ML models to Raspberry Pi using Docker and Azure IoT Edge 
+                  for real-time diagnostics in automotive environments.
+                </p>
+                <div class="project-tags">
+                  <span class="badge project-tag">Docker</span>
+                  <span class="badge project-tag">Azure IoT</span>
+                  <span class="badge project-tag">ML</span>
+                  <span class="badge project-tag">Edge Computing</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-lg-6">
+              <div class="project-card">
+                <div class="project-icon">
+                  <i class="bi bi-api"></i>
+                </div>
+                <h4>Backend API Development</h4>
+                <p class="text-muted">
+                  Created FastAPI backends with RESTful APIs for internal tools and dashboards, 
+                  enabling efficient data processing and integration.
+                </p>
+                <div class="project-tags">
+                  <span class="badge project-tag">FastAPI</span>
+                  <span class="badge project-tag">REST API</span>
+                  <span class="badge project-tag">Python</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-lg-6">
+              <div class="project-card">
+                <div class="project-icon">
+                  <i class="bi bi-bar-chart"></i>
+                </div>
+                <h4>Dashboard Redesign</h4>
+                <p class="text-muted">
+                  Migrated MATLAB dashboards from Tableau to improve vehicle diagnostics 
+                  data visibility and user experience.
+                </p>
+                <div class="project-tags">
+                  <span class="badge project-tag">MATLAB</span>
+                  <span class="badge project-tag">Dashboard</span>
+                  <span class="badge project-tag">Data Viz</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-5 bg-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="section-header text-center mb-5">
+            <h2 class="display-5 fw-bold">Get In Touch</h2>
+            <div class="divider mx-auto"></div>
+          </div>
+          
+          <div class="row g-4">
+            <div class="col-md-6">
+              <div class="contact-card">
+                <div class="contact-icon">
+                  <i class="bi bi-envelope"></i>
+                </div>
+                <h5>Email</h5>
+                <a href="mailto:pranavshitap@gmail.com" class="contact-link">
+                  pranavshitap@gmail.com
+                </a>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="contact-card">
+                <div class="contact-icon">
+                  <i class="bi bi-github"></i>
+                </div>
+                <h5>GitHub</h5>
+                <a href="https://github.com/pranavshitap" target="_blank" class="contact-link">
+                  @pranavshitap
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="text-center mt-4">
+            <p class="text-muted">
+              Learn more about GitHub Pages 
+              <a href="https://pages.github.com/" target="_blank" class="text-primary">here</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-4 text-center">
+    <div class="container">
+      <p class="text-muted mb-0">
+        © 2024 Pranav Shitap. Built with Bootstrap 5 and ❤️
+      </p>
+    </div>
+  </footer>
+
+  <!-- Chatbot Modal -->
+  <div class="modal fade" id="chatbotModal" tabindex="-1" aria-labelledby="chatbotModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content chatbot-modal-content">
+        <div class="modal-header chatbot-header">
+          <h5 class="modal-title" id="chatbotModalLabel">
+            <i class="bi bi-chat-dots me-2"></i>Chat with Pranav
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body chatbot-body">
+          <div id="chat-access" class="alert alert-success d-none">
+            <i class="bi bi-check-circle me-2"></i>Access Granted
+          </div>
+          <div id="chat-log" class="chat-log mb-3"></div>
+          <form id="chat-form" class="d-flex">
+            <input type="text" id="chat-input" class="form-control me-2" placeholder="Ask something..." required>
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-send"></i>
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- Floating Chat Button -->
+  <button class="btn btn-primary chatbot-fab" id="chatbotFab" title="Chat with me">
+    <i class="bi bi-chat-dots"></i>
+  </button>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
   <script src="script.js"></script>
 </body>
 </html>
