@@ -711,18 +711,3 @@ body {
   display: block;
   margin: auto;
 }
-
-.profile-pic::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.2); /* default dark overlay */
-  z-index: 2;
-}
-
-@media (prefers-color-scheme: light) {
-  .profile-pic::after {
-    background: rgba(255, 255, 255, 0.2); /* light overlay for light mode */
-  }
-}
