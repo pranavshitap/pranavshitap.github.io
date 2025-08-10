@@ -700,4 +700,14 @@ body {
   transition: all var(--transition-medium);
 }
 
-
+.profile-pic {
+  width: 120px; /* adjust size */
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid transparent;
+  background-image: linear-gradient(to bottom right, #a64cf4, #ff6ec4); /* match your gradient */
+  padding: 3px; /* gradient border spacing */
+  display: block;
+  margin: auto;
+}
