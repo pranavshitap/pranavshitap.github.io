@@ -642,7 +642,7 @@ body {
 }
 
 [data-bs-theme="dark"] #theme-icon:before {
-  content: "\f186"; /* moon icon */
+  content: "\f497"; /* moon icon */
 }
 
 /* ===============================
