@@ -116,13 +116,8 @@ const themeToggle = document.getElementById('themeToggle');
 const themeIcon = document.getElementById('theme-icon');
 const htmlElement = document.documentElement;
 
-function getStoredTheme() {
-  return localStorage.getItem('theme') || 'dark';
-}
-
-function setStoredTheme(theme) {
-  localStorage.setItem('theme', theme);
-}
+// Detect system preference
+const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
 function applyTheme(theme) {
   htmlElement.setAttribute('data-bs-theme', theme);
@@ -147,7 +142,6 @@ function toggleTheme() {
   const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
   
   applyTheme(newTheme);
-  setStoredTheme(newTheme);
   
   // Add a nice animation effect
   themeToggle.style.transform = 'scale(0.8)';
@@ -156,11 +150,17 @@ function toggleTheme() {
   }, 150);
 }
 
-// Initialize theme
-applyTheme(getStoredTheme());
+// Initialize theme to system preference
+applyTheme(darkModeQuery.matches ? 'dark' : 'light');
 
-// Add event listener
+// Listen for system theme changes
+darkModeQuery.addEventListener('change', (e) => {
+  applyTheme(e.matches ? 'dark' : 'light');
+});
+
+// Add event listener for button
 themeToggle.addEventListener('click', toggleTheme);
+
 
 // ===============================
 // SMOOTH SCROLLING NAVIGATION
