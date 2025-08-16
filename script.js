@@ -212,6 +212,12 @@ const chatInput = document.getElementById('chat-input');
 const chatLog = document.getElementById('chat-log');
 const chatAccess = document.getElementById('chat-access');
 
+// Store chat history as an array of message objects
+let chatHistory = [
+  // Optionally, you can initialize with a system prompt or leave empty
+  // { role: "system", content: "You are Pranav, a helpful assistant." }
+];
+
 // Open chatbot modal
 function openChatbot() {
   chatbotModal.show();
@@ -226,15 +232,16 @@ chatbotFab.addEventListener('click', openChatbot);
 chatbotBtn.addEventListener('click', openChatbot);
 
 // SSE Chat functionality
-async function sendChatMessage(message, onStreamChunk) {
+async function sendChatMessage(messages, onStreamChunk) {
   try {
+    console.log('Sending messages:', messages);
     const response = await fetch('http://127.0.0.1:8010/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: JSON.stringify({ prompt: message }),
+      body: JSON.stringify({ messages }), // Send the full messages array
     });
 
     if (!response.ok) {
@@ -252,10 +259,10 @@ async function sendChatMessage(message, onStreamChunk) {
     while (true) {
       const { value, done } = await reader.read();
       if (done) break;
-      
+
       const chunk = decoder.decode(value, { stream: true });
       reply += chunk;
-      
+
       if (onStreamChunk) {
         onStreamChunk(chunk);
       }
@@ -271,20 +278,20 @@ async function sendChatMessage(message, onStreamChunk) {
 function addChatMessage(sender, message, isStreaming = false) {
   const messageDiv = document.createElement('div');
   messageDiv.className = `chat-message ${sender === 'You' ? 'user' : 'bot'}`;
-  
+
   const bubbleDiv = document.createElement('div');
   bubbleDiv.className = 'chat-bubble';
-  
+
   if (sender === 'You') {
     bubbleDiv.innerHTML = `<strong>You:</strong> ${escapeHtml(message)}`;
   } else {
     bubbleDiv.innerHTML = `<strong>Pranav:</strong> <span class="bot-reply">${isStreaming ? '' : escapeHtml(message)}</span>`;
   }
-  
+
   messageDiv.appendChild(bubbleDiv);
   chatLog.appendChild(messageDiv);
   chatLog.scrollTop = chatLog.scrollHeight;
-  
+
   return isStreaming ? bubbleDiv.querySelector('.bot-reply') : null;
 }
 
@@ -322,37 +329,43 @@ function showTypingIndicator() {
 // Chat form submission
 chatForm.addEventListener('submit', async function (e) {
   e.preventDefault();
-  
+
   const userMessage = chatInput.value.trim();
   if (!userMessage) return;
-  
-  // Add user message
+
+  // Add user message to UI and history
   addChatMessage('You', userMessage);
+  chatHistory.push({ role: "user", content: userMessage });
   chatInput.value = '';
-  
+
   // Show typing indicator
   const typingIndicator = showTypingIndicator();
-  
+
   try {
     // Remove typing indicator and add bot message
     chatLog.removeChild(typingIndicator);
-    const botReplyElement = addChatMessage('Pranav', '', true);
-    
+    const botReplyElement = addChatMessage('Assistant', '', true);
+
     // Stream the response
-    await sendChatMessage(userMessage, (chunk) => {
+    let botReply = '';
+    await sendChatMessage(chatHistory, (chunk) => {
+      botReply += chunk;
       botReplyElement.textContent += chunk;
       chatLog.scrollTop = chatLog.scrollHeight;
     });
-    
+
+    // Add assistant's reply to history
+    chatHistory.push({ role: "model", content: botReply });
+
     // Check for session access after successful message
     checkSessionAccess();
-    
+
   } catch (error) {
     // Remove typing indicator and show error
     if (typingIndicator.parentNode) {
       chatLog.removeChild(typingIndicator);
     }
-    
+
     addChatMessage('System', 'Sorry, I\'m having trouble connecting right now. Please try again later.');
     console.error('Chat error:', error);
   }
