@@ -235,7 +235,7 @@ chatbotBtn.addEventListener('click', openChatbot);
 async function sendChatMessage(messages, onStreamChunk) {
   try {
     console.log('Sending messages:', messages);
-    const response = await fetch('http://127.0.0.1:8010/api/chat', {
+    const response = await fetch('https://col-suspected-friendship-saves.trycloudflare.com/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -283,9 +283,9 @@ function addChatMessage(sender, message, isStreaming = false) {
   bubbleDiv.className = 'chat-bubble';
 
   if (sender === 'You') {
-    bubbleDiv.innerHTML = `<strong>You:</strong> ${escapeHtml(message)}`;
+    bubbleDiv.innerHTML = `<strong></strong> ${escapeHtml(message)}`;
   } else {
-    bubbleDiv.innerHTML = `<strong>Pranav:</strong> <span class="bot-reply">${isStreaming ? '' : escapeHtml(message)}</span>`;
+    bubbleDiv.innerHTML = `<strong></strong> <span class="bot-reply">${isStreaming ? '' : escapeHtml(message)}</span>`;
   }
 
   messageDiv.appendChild(bubbleDiv);
@@ -313,7 +313,7 @@ function showTypingIndicator() {
   typingDiv.className = 'chat-message bot typing-indicator';
   typingDiv.innerHTML = `
     <div class="chat-bubble">
-      <strong>Pranav:</strong> 
+      <strong></strong> 
       <span class="typing-dots">
         <span></span>
         <span></span>
@@ -491,7 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Add a welcome message to chat
   setTimeout(() => {
     if (chatLog.children.length === 0) {
-      addChatMessage('Pranav', 'Hi there! 👋 Feel free to ask me anything about my work, projects, or just say hello!');
+      addChatMessage('Assistant', 'Hi there! 👋 Feel free to ask me anything about Pranav\'s work, projects, or just say hello!');
     }
   }, 1000);
   
