@@ -235,7 +235,7 @@ chatbotBtn.addEventListener('click', openChatbot);
 async function sendChatMessage(messages, onStreamChunk) {
   try {
     console.log('Sending messages:', messages);
-    const response = await fetch('https://stolen-on-unusual-heath.trycloudflare.com/api/chat', {
+    const response = await fetch('https://contributors-ks-lat-compiled.trycloudflare.com/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
