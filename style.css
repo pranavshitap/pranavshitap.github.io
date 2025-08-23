@@ -15,8 +15,8 @@
   /* Custom colors */
   --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
   --gradient-secondary: linear-gradient(135deg, #64748b 0%, #475569 100%);
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.3);
   --backdrop-blur: blur(20px);
   --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.1);
   --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.15);
@@ -33,8 +33,8 @@
   --bs-primary-rgb: 129, 140, 248;
   --bs-secondary: #94a3b8;
   --bs-success: #34d399;
-  --glass-bg: rgba(15, 23, 42, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(0, 0, 0, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.15);
 }
 
 /* ===============================
