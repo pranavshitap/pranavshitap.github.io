@@ -498,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Add a welcome message to chat
   setTimeout(() => {
     if (chatLog.children.length === 0) {
-      addChatMessage('Assistant', 'Hi there! 👋 Feel free to ask me anything about Pranav\'s work, projects, or just say hello!');
+      addChatMessage('Assistant', 'Hello, Stranger! I’m Pranav’s virtual assistant. Welcome to his GitHub page! Could you please share your name and the reason for your visit today?');
     }
   }, 1000);
   
