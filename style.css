@@ -420,7 +420,7 @@ body {
 
 .chatbot-body {
   padding: 1rem;
-  height: 70dvh;
+  height: calc(100dvh - 150px);
   display: flex;
   flex-direction: column;
 }
