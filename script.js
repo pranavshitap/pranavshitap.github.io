@@ -213,7 +213,7 @@ const chatLog = document.getElementById('chat-log');
 const chatAccess = document.getElementById('chat-access');
 
 // Store chat history as an array of message objects
-let chatHistory = [{ role: "model", content: "Hello, Stranger! I’m Pranav’s virtual assistant. Welcome to his GitHub page! Could you please share your name and the reason for your visit today?"}];
+let chatHistory = [{ role: "model", content: "Hello, Stranger! I’m Pranav’s virtual assistant. Welcome to his GitHub page! Could you please share your name, a little about yourself, and the reason for your visit today?"}];
 
 // Open chatbot modal
 function openChatbot() {
@@ -498,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Add a welcome message to chat
   setTimeout(() => {
     if (chatLog.children.length === 0) {
-      addChatMessage('Assistant', 'Hello, Stranger! I’m Pranav’s virtual assistant. Welcome to his GitHub page! Could you please share your name and the reason for your visit today?');
+      addChatMessage('Assistant', 'Hello, Stranger! I’m Pranav’s virtual assistant. Welcome to his GitHub page! Could you please share your name, a little about yourself, and the reason for your visit today?');
     }
   }, 1000);
   
@@ -563,9 +563,9 @@ const chatResetBtn = document.getElementById('chat-reset-btn');
 if (chatResetBtn) {
   chatResetBtn.addEventListener('click', function () {
     // Clear chat history and UI
-    chatHistory = [{ role: "model", content: "Hello, Stranger! I’m Pranav’s virtual assistant. Welcome to his GitHub page! Could you please share your name and the reason for your visit today?"}];;
+    chatHistory = [{ role: "model", content: "Hello, Stranger! I’m Pranav’s virtual assistant. Welcome to his GitHub page! Could you please share your name, a little about yourself, and the reason for your visit today?"}];;
     chatLog.innerHTML = '';
     // Optionally, show a welcome message again
-    addChatMessage('Assistant', "Hello, Stranger! I’m Pranav’s virtual assistant. Welcome to his GitHub page! Could you please share your name and the reason for your visit today?");
+    addChatMessage('Assistant', "Hello, Stranger! I’m Pranav’s virtual assistant. Welcome to his GitHub page! Could you please share your name, a little about yourself, and the reason for your visit today?");
   });
 }
