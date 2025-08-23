@@ -213,10 +213,7 @@ const chatLog = document.getElementById('chat-log');
 const chatAccess = document.getElementById('chat-access');
 
 // Store chat history as an array of message objects
-let chatHistory = [
-  // Optionally, you can initialize with a system prompt or leave empty
-  // { role: "system", content: "You are Pranav, a helpful assistant." }
-];
+let chatHistory = [{ role: "model", content: "Hello, Stranger! I’m Pranav’s virtual assistant. Welcome to his GitHub page! Could you please share your name and the reason for your visit today?"}];
 
 // Open chatbot modal
 function openChatbot() {
@@ -566,9 +563,9 @@ const chatResetBtn = document.getElementById('chat-reset-btn');
 if (chatResetBtn) {
   chatResetBtn.addEventListener('click', function () {
     // Clear chat history and UI
-    chatHistory = [];
+    chatHistory = [{ role: "model", content: "Hello, Stranger! I’m Pranav’s virtual assistant. Welcome to his GitHub page! Could you please share your name and the reason for your visit today?"}];;
     chatLog.innerHTML = '';
     // Optionally, show a welcome message again
-    addChatMessage('Assistant', 'Chat has been reset. How can I help you?');
+    addChatMessage('Assistant', "Hello, Stranger! I’m Pranav’s virtual assistant. Welcome to his GitHub page! Could you please share your name and the reason for your visit today?");
   });
 }
