@@ -361,9 +361,20 @@ chatForm.addEventListener('submit', async function (e) {
     checkSessionAccess();
 
   } catch (error) {
-    // Remove typing indicator and show error
+    // Remove typing indicator if present
     if (typingIndicator.parentNode) {
       chatLog.removeChild(typingIndicator);
+    }
+    // Remove the last empty bot message if it exists (from addChatMessage with isStreaming=true)
+    const lastMsg = chatLog.lastElementChild;
+    if (
+      lastMsg &&
+      lastMsg.classList.contains('chat-message') &&
+      lastMsg.classList.contains('bot') &&
+      lastMsg.querySelector('.bot-reply') &&
+      lastMsg.querySelector('.bot-reply').textContent === ''
+    ) {
+      chatLog.removeChild(lastMsg);
     }
 
     addChatMessage('System', 'Sorry, I\'m having trouble connecting right now. Please try again later.');
@@ -546,4 +557,19 @@ function isInViewport(element) {
     rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
+}
+
+// ===============================
+// CHAT RESET BUTTON FUNCTIONALITY
+// ===============================
+
+const chatResetBtn = document.getElementById('chat-reset-btn');
+if (chatResetBtn) {
+  chatResetBtn.addEventListener('click', function () {
+    // Clear chat history and UI
+    chatHistory = [];
+    chatLog.innerHTML = '';
+    // Optionally, show a welcome message again
+    addChatMessage('Assistant', 'Chat has been reset. How can I help you?');
+  });
 }
