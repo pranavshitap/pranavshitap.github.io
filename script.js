@@ -283,9 +283,9 @@ function addChatMessage(sender, message, isStreaming = false) {
   bubbleDiv.className = 'chat-bubble';
 
   if (sender === 'You') {
-    bubbleDiv.innerHTML = `<strong></strong> ${escapeHtml(message)}`;
+    bubbleDiv.innerHTML = `${escapeHtml(message)}`;
   } else {
-    bubbleDiv.innerHTML = `<strong></strong> <span class="bot-reply">${isStreaming ? '' : escapeHtml(message)}</span>`;
+    bubbleDiv.innerHTML = `<span class="bot-reply">${isStreaming ? '' : escapeHtml(message)}</span>`;
   }
 
   messageDiv.appendChild(bubbleDiv);
@@ -313,7 +313,6 @@ function showTypingIndicator() {
   typingDiv.className = 'chat-message bot typing-indicator';
   typingDiv.innerHTML = `
     <div class="chat-bubble">
-      <strong></strong> 
       <span class="typing-dots">
         <span></span>
         <span></span>
