@@ -575,7 +575,7 @@ fetch("https://ga-counter.pranavshitap.workers.dev/api/visits")
   .then(response => response.json())
   .then(data => {
     document.getElementById("sessions").textContent =
-      Number(data.sessions).toLocaleString();
+      Number(data.visits).toLocaleString();
     document.getElementById("users").textContent =
       Number(data.activeUsers).toLocaleString();
   })
