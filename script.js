@@ -569,3 +569,17 @@ if (chatResetBtn) {
     addChatMessage('Assistant', "Hello, Stranger! I’m Pranav’s virtual assistant. Welcome to his GitHub page! Could you please share your name, a little about yourself, and the reason for your visit today?");
   });
 }
+
+
+fetch("https://ga-counter.pranavshitap.workers.dev/api/visits")
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById("sessions").textContent =
+      Number(data.sessions).toLocaleString();
+    document.getElementById("users").textContent =
+      Number(data.activeUsers).toLocaleString();
+  })
+  .catch(() => {
+    document.getElementById("sessions").textContent = "—";
+    document.getElementById("users").textContent = "—";
+  });
